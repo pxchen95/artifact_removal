@@ -25,6 +25,16 @@ function [B, A, alp, grad_g, hess_g, g] = remove_artifact_ver_g(S, t, fs, K, fre
 %     hess_g: (n+1) x (n+1) matrix, hessian of g at (freq, delta_hat)
 %     g:      scalar, value of least squares function g at (freq, delta_hat)
 
+if ~iscell(S)
+    disp('ERROR: Input S must be a cell array')
+    return
+end
+
+if ~iscell(t)
+    disp('ERROR: Input t must be a cell array')
+    return
+end
+
 % CONVERT CELL ARRAYS TO VECTORS
 numSegments = length(S); % number of segments
 S_vec = []; t_vec = []; t_vec_no_d = [];

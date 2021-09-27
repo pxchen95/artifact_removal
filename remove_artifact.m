@@ -19,6 +19,16 @@ function [B, A, alp] = remove_artifact(S, t, fs, K, freq, delta_hat)
 %          alp(i)   = amplitude of cos(2*pi*K*i*t), i = 2, ..., K+1
 %          alp(K+i) = amplitude of sin(2*pi*K*i*t), i = 2, ..., K+1
 
+if ~iscell(S)
+    disp('ERROR: Input S must be a cell array')
+    return
+end
+
+if ~iscell(t)
+    disp('ERROR: Input t must be a cell array')
+    return
+end
+
 % CONVERT CELL ARRAYS TO VECTORS
 numSegments = length(S); % number of segments
 S_vec = []; t_vec = []; 

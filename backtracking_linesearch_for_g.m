@@ -43,7 +43,7 @@ num_iter = i;
 
 if num_iter == maxiter
     disp('WARNING: backtracking linesearch for g did not converge')
-    fprintf('Stopping criteria values: g_x - g_new = %f >? alp_1*param_t = %f; alp_1 = %f\n', g_x - g_new, alp_1*param_t, alp1)
+    fprintf('Stopping criteria values: g_x - g_new = %e >? alp_1*param_t = %e; alp_1 = %f\n', g_x - g_new, alp_1*param_t, alp1)
 end
 
 end

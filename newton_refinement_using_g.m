@@ -28,6 +28,16 @@ function [w, d, num_iter, B, A, alp] = ...
 %          alp(1)   = amp_0
 %          alp(i)   = amplitude of cos(2*pi*K*i*t), i = 2, ..., K+1
 %          alp(K+i) = amplitude of sin(2*pi*K*i*t), i = 2, ..., K+1
+ 
+if ~iscell(S)
+    disp('ERROR: Input S must be a cell array')
+    return
+end
+
+if ~iscell(t)
+    disp('ERROR: Input t must be a cell array')
+    return
+end
 
 numSegments = length(S);
 p0 = zeros(numSegments,1); % initialization
@@ -73,7 +83,7 @@ w = p1(1);
 d = p1(2:end)';
 num_iter = i;
 
-if num_iter == N_maxiter
+if num_iter == maxiter
     disp('WARNING: Newton refinement did not converge')
     fprintf('Stopping criteria values: gradient norm = %e, iterate diff = %e\n', ...
         norm(grad_g), err)

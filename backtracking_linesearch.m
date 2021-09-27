@@ -48,7 +48,7 @@ num_iter = i;
 
 if num_iter == N_maxiter
     disp('WARNING: backtracking linesearch did not converge')
-    fprintf('Stopping criteria values: E - E0 = %f >? eta1*alp = %f\n', E - E0, eta1*alp)
+    fprintf('Stopping criteria values: E - E0 = %e >? eta1*alp = %e\n', E - E0, eta1*alp)
 end
 
 % constrain eta1 in [0, 1/norm(d0(2:end))]

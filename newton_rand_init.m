@@ -26,6 +26,11 @@ function [w, d, num_iter, w0_test, d0_test, E_save, freq_save, d_save, NA_num_it
 %     NA_num_iter_save: 1 x numInit vector, # of iterates of Newton's ascent used for each initialization
 %     t:         1 x (n+1) cell array, t{i} = 1 x N_i, "unshifted" sample times in [0, (N_i-1)/fs]
 
+if ~iscell(S)
+    disp('ERROR: Input S must be a cell array')
+    return
+end
+
 numSegments = length(S);     % # of segments
 numShifts = numSegments - 1; % # of shifts = # of segments - 1
 

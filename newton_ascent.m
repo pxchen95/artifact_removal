@@ -17,6 +17,16 @@ function [w, d, num_iter] = newton_ascent(w0, d0, N_maxiter, LS_maxiter, S, t, f
 %     d:        1 x n vector, d(i) = phase shift i
 %     num_iter: scalar, # of iterates used for Newton's ascent
 
+if ~iscell(S)
+    disp('ERROR: Input S must be a cell array')
+    return
+end
+
+if ~iscell(t)
+    disp('ERROR: Input t must be a cell array')
+    return
+end
+
 x0 = [w0; d0']; % initialize
 [~, grad_E, hess_E] = calc_E_multtshifts(x0(1), x0(2:end)', S, t, fs);
 

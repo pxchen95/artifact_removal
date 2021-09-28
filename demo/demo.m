@@ -49,17 +49,19 @@ S = convert_cellarray_to_vector(S_cell, zeros(1,length(S_cell)-1), 0);
 subplot(1,2,1)
 plot(mod(t_vec_true,1/freq_true), S, '.')
 hold on
+plot(mod((0:length(A)-1)/fs,1/freq_true), A, '.')
 plot(mod(t_vec,1/w), A_est_vec, '.')
 title('Algorithm 1')
-legend('observed signal', 'reconstructed artifact')
+legend('observed signal', 'true artifact', 'reconstructed artifact')
 xlabel('time modded by period')
 
 subplot(1,2,2)
 plot(mod(t_vec_true,1/freq_true), S, '.')
 hold on
+plot(mod((0:length(A)-1)/fs,1/freq_true), A, '.')
 plot(mod(t_vec_refine,1/w_refine), A_est_vec_refine, '.')
 title('Algorithm 2')
-legend('observed signal', 'reconstructed artifact')
+legend('observed signal', 'true artifact', 'reconstructed artifact')
 xlabel('time modded by period')
 
 %% ERROR IN TIME DOMAIN

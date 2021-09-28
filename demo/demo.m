@@ -3,7 +3,9 @@ close all
 clc
 
 rng(0)   
-example = 2;
+example = 2; % PICK WHICH EXAMPLE TO RUN:
+             % 1 = 1 SEGMENT OF DATA
+             % 2 = MULTIPLE SHORT SEGMENTS OF DATA
 
 %%
 if example == 1

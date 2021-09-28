@@ -1,4 +1,4 @@
-function [w, d, num_iter, w0_test, d0_test, E_save, freq_save, d_save, NA_num_iter_save, t] = ...
+function [w, d, num_iter, t, w0_test, d0_test, E_save, freq_save, d_save, NA_num_iter_save] = ...
     newton_rand_init(w0, w0_range, numInit, N_maxiter, LS_maxiter, S, fs, tol)
 % Run newton_ascent.m using (uniform) random initialization
 % 
@@ -17,6 +17,7 @@ function [w, d, num_iter, w0_test, d0_test, E_save, freq_save, d_save, NA_num_it
 %     w:         scalar, frequency
 %     d:         1 x n vector, d(i) = time shift i
 %     num_iter:  scalar, # of iterates used for Newton's ascent
+%     t:         1 x (n+1) cell array, t{i} = 1 x N_i, "unshifted" sample times in [0, (N_i-1)/fs]
 % NOTE: all outputs below are for debugging purposes
 %     w0_test:   1 x numInit vector, freq_save(i) = frequency initializations used
 %     d0_test:   numInit x numShifts matrix, shift initializations used
@@ -24,7 +25,6 @@ function [w, d, num_iter, w0_test, d0_test, E_save, freq_save, d_save, NA_num_it
 %     freq_save: 1 x numInit vector, frequency estimates for each initialization
 %     d_save:    numInit x numShifts matrix, shift estimates for each initialization
 %     NA_num_iter_save: 1 x numInit vector, # of iterates of Newton's ascent used for each initialization
-%     t:         1 x (n+1) cell array, t{i} = 1 x N_i, "unshifted" sample times in [0, (N_i-1)/fs]
 
 if ~iscell(S)
     disp('ERROR: Input S must be a cell array')
@@ -42,6 +42,7 @@ end
 
 % random initialization
 w0_test = w0 + rand(1,numInit)*2*w0_range - w0_range; % pick random inits for freq
+w0_test(1) = w0;                                      % force 1 init to be the initial guess
 d0_test = rand(numInit,numShifts);                    % pick random inits for shifts
 
 freq_save = zeros(1,numInit); % save outputs of each initialization

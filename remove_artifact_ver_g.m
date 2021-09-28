@@ -1,4 +1,5 @@
-function [B, A, alp, grad_g, hess_g, g] = remove_artifact_ver_g(S, t, fs, K, freq, delta_hat)
+function [B, A, alp, grad_g, hess_g, g, t_vec] = ...
+    remove_artifact_ver_g(S, t, fs, K, freq, delta_hat)
 % (1) Reconstructs periodic artifact A with fundamental frequency freq 
 % using K harmonics, i.e. A(t) = sum_i^K amp_{i,c}*cos(2*pi*w*i*t) +
 % amp_{i,s}*sin(2*pi*w*i*t)), and removes it from S, i.e. B = S - A.
@@ -13,6 +14,7 @@ function [B, A, alp, grad_g, hess_g, g] = remove_artifact_ver_g(S, t, fs, K, fre
 %     K:         scalar, number of harmonics
 %     freq:      scalar, true/estimated frequency
 %     delta_hat: 1 x n vector, true/estimated phase shifts
+%     t_vec:     1 x totalNumSamples vector, times shifted by found time shifts
 %
 % OUTPUTS:
 %     B:      1 x (n+1) cell array, B{i} = 1 x N_i, recovered signal samples in segment i

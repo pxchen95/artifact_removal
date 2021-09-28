@@ -1,4 +1,4 @@
-function [w, d, num_iter, B, A, alp] = ...
+function [w, d, num_iter, B, A, alp, t_vec] = ...
     newton_refinement_using_g(w0, d0, maxiter, S, t, fs, K, tol)
 % Solves the following least squares problem using Newton's descent: 
 %           min_{w,d} min_{amp_0,amp_{i,c},amp_{i,s}} |S - A|^2,
@@ -17,6 +17,7 @@ function [w, d, num_iter, B, A, alp] = ...
 %     fs:         scalar, sampling rate
 %     K:          scalar, # of harmonics to fit
 %     tol:        scalar, tolerance for stopping criteria
+%     t_vec:      1 x totalNumSamples vector, times shifted by found time shifts
 %
 % OUTPUTS: 
 %     w:        scalar, frequency
@@ -64,7 +65,7 @@ for i = 1:maxiter
     err = norm(p1 - p0); % difference between iterates
     
     p0 = p1; % update iterate
-    [B, A, alp, grad_g, hess_g, g] = remove_artifact_ver_g(S, t, fs, K, p0(1), p0(2:end)');
+    [B, A, alp, grad_g, hess_g, g, t_vec] = remove_artifact_ver_g(S, t, fs, K, p0(1), p0(2:end)');
 
     % for debugging
     p_save(:,i+1) = p1;

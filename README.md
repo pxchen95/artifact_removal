@@ -17,7 +17,7 @@
 * Note that segments are input into the functions as **cell arrays**.
 
 ## Brief Description of MATLAB Functions/Scripts
-We divide the functions/scripts into three groups as follows.
+We group the functions/scripts as follows:
 ### Algorithm 1
 *Estimates the frequency and phase shifts by maximizing the energy using Newton's ascent.*
 * newton_rand_init.m: Runs Newton's ascent using uniform random initialization
@@ -34,6 +34,8 @@ We divide the functions/scripts into three groups as follows.
 * backtracking_linesearch_for_g.m: Computes the stepsize for Newton's descent (currently unused)
 
 ### Other
-* demo.m: Demonstration of how to use the included functions
+* demo/demo.m: Demonstration of how to use the included functions with examples of different ways to visualize the results
+* demo/1segment_example.mat: 1 long segment of data, where artifact is sum of sinusoids with 5 harmonics, true underlying signal is Gaussian noise
+* demo/multsegment_example.mat: 10 short segments of data, where artifact is sum of sinusoids with 5 harmonics, true underlying signal is Gaussian noise
 * convert_cell_array_to_vector.m: Converts cell array to vector with gaps specified by input *samp_shift*
 * convert_vector_to_cellarray.m: Converts vector to cell array with lengths of segments specified by input *N* and lengths of gaps specified by input *samp_shfit*

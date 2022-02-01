@@ -21,7 +21,7 @@
 ## Brief Description of MATLAB Functions/Scripts
 We group the functions/scripts as follows:
 ### Algorithm 1
-*Estimates the frequency and phase shifts by maximizing the energy using Newton's ascent.*
+*Estimates the frequency and phase shifts by maximizing the energy using Newton's ascent. Corresponds to Algorithm 2 (initialization algorithm) in the paper INSERT PAPER NAME.*
 * newton_rand_init.m: Runs Newton's ascent using uniform random initialization
 * newton_ascent.m: Uses Newton's ascent to maximize the energy with respect to frequency and phase shifts
 * remove_artifact.m: Uses simple harmonic regression to reconstruct and remove the artifact (optional)
@@ -30,7 +30,7 @@ We group the functions/scripts as follows:
 * backtracking_linesearch: Computes the stepsize for Newton's ascent
  
 ### Algorithm 2
-*Refines the frequency and phase shift estimates from Algorithm 1 by solving a least squares problem that minimizes over frequency, phase shifts, and amplitudes through a combination of harmonic regression and Newton's descent.*
+*Refines the frequency and phase shift estimates from Algorithm 1 by solving a least squares problem that minimizes over frequency, phase shifts, and amplitudes by jointly applying harmonic regression and Newton's descent. Corresponds to Algorithm 1 (artifact removal algorithm) in the paper INSERT PAPER NAME.*
 * newton_refinement_using_g.m: Runs Newton's descent to solve the least squares problem and to refine the estimates and reconstruct/remove the artifact
 * remove_artifact_ver_g.m: Computes the objective function in the least squares problem, its gradient, and its Hessian 
 * backtracking_linesearch_for_g.m: Computes the stepsize for Newton's descent (currently unused)

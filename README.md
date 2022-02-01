@@ -4,7 +4,7 @@
 * "segments" refer to segments of contiguous data on which stimulation is on and the stimulation parameters are **constant** (e.g., constant amplitude, fundamental frequency, shape, etc.).
 * "gaps" refer to what is in between segments, whether that be missing data, data with stimulation off, data where the stimulation parameters do not match those of the stimulation in the segments, etc. 
 * "stimulation" and "artifact" are used interchangeably.
-* "phase shift i" refers to the phase shift between the periodic artifact in the 0-th and i-th segment of data and corresponds to the ith gap in the data.
+* "phase shift i" refers to the phase shift between the periodic artifact in the 0-th and i-th segment of data and corresponds to the i-th gap in the data.
 
 ## Notation
 *Included in comments in the code; typical notation with associated definitions.*

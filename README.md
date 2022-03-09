@@ -1,5 +1,7 @@
 # artifact_removal
 
+Patents related to these algorithms have been provisionally filed.
+
 ## Common Terms
 * "segments" refer to segments of contiguous data on which stimulation is on and the stimulation parameters are **constant** (e.g., constant amplitude, fundamental frequency, shape, etc.).
 * "gaps" refer to what is in between segments, whether that be missing data, data with stimulation off, data where the stimulation parameters do not match those of the stimulation in the segments, etc. 
@@ -41,4 +43,4 @@ We group the functions/scripts as follows:
 * demo/1segment_example.mat: 1 long segment of data, where artifact is sum of sinusoids with 5 harmonics, true underlying signal is Gaussian noise
 * demo/multsegment_example.mat: 10 short segments of data, where artifact is sum of sinusoids with 5 harmonics, true underlying signal is Gaussian noise
 * convert_cell_array_to_vector.m: Converts cell array to vector with gaps specified by input *samp_shift*
-* convert_vector_to_cellarray.m: Converts vector to cell array with lengths of segments specified by input *N* and lengths of gaps specified by input *samp_shfit*
+* convert_vector_to_cellarray.m: Converts vector to cell array with lengths of segments specified by input *N* and lengths of gaps specified by input *samp_shift*

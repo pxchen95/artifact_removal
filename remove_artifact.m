@@ -34,7 +34,7 @@ end
 numSegments = length(S); % number of segments
 S_vec = []; t_vec = []; 
 N = zeros(1, numSegments);
-sumT = 0;
+% sumT = 0;
 for i = 1:numSegments
     S_vec = [S_vec, S{i}];  % observed signal
     
@@ -45,14 +45,14 @@ for i = 1:numSegments
     end
     
     N_i = length(S{i});        % number of samples in segment i
-    T_i = N_i/fs;              % length of segment i in time
-    tshift = sumT + sum_shift; % segment i starts sampling at time tshift
+%     T_i = N_i/fs;              % length of segment i in time
+    tshift = sum_shift; %sumT + sum_shift; % segment i starts sampling at time tshift
     
     N(i) = N_i; % length of segment i in samples
     
     t_vec = [t_vec, t{i}+tshift]; % sample times (shifted)
     
-    sumT = sumT + T_i; % update endtime sum
+%     sumT = sumT + T_i; % update endtime sum
 end
 
 % COMPUTE AMPLITUDES USING LEAST SQUARES IN TIME

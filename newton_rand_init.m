@@ -15,7 +15,7 @@ function [w, d, num_iter, t, w0_test, d0_test, E_save, freq_save, d_save, NA_num
 %
 % OUTPUTS: 
 %     w:         scalar, frequency
-%     d:         1 x n vector, d(i) = time shift i
+%     d:         1 x n vector, d(i) = phase shift i
 %     num_iter:  scalar, # of iterates used for Newton's ascent
 %     t:         1 x (n+1) cell array, t{i} = 1 x N_i, "unshifted" sample times in [0, (N_i-1)/fs]
 % NOTE: all outputs below are for debugging purposes

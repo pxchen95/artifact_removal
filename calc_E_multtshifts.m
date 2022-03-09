@@ -4,7 +4,7 @@ function [E, grad_E, hess_E] = calc_E_multtshifts(w, d, f, t, fs)
 %
 % INPUTS:
 %   w: scalar, frequency
-%   d: 1 x n vector, d(i) = hat delta_i, phase shifts
+%   d: 1 x n vector, d(i) = phase shift between 1st and (i+1)th segment
 %   f: 1 x (n+1) cell array, f{i} = 1 x N_i, samples of segment i
 %   t: 1 x (n+1) cell array, t{i} = 1 x N_i, times that segment i is sampled at
 %   fs: scalar, sampling rate
@@ -16,15 +16,15 @@ function [E, grad_E, hess_E] = calc_E_multtshifts(w, d, f, t, fs)
     
 d = [0, d];
 n = length(t) - 1; % number of time shifts
-T = zeros(1,n+1);  % length in time of segment i, T(i) = T_i
+% T = zeros(1,n+1);  % length in time of segment i, T(i) = T_i
 
 % COMPUTE COS/SIN
 cos_wave_shift = {};
 sin_wave_shift = {};
 for i = 1:n+1
-    cos_wave_shift{i} = cos(2*pi*(w*(t{i}+sum(T))+d(i)));
-    sin_wave_shift{i} = sin(2*pi*(w*(t{i}+sum(T))+d(i)));
-    T(i) = length(t{i})/fs;
+    cos_wave_shift{i} = cos(2*pi*(w*(t{i})+d(i))); %cos_wave_shift{i} = cos(2*pi*(w*(t{i}+sum(T))+d(i)));
+    sin_wave_shift{i} = sin(2*pi*(w*(t{i})+d(i))); %sin_wave_shift{i} = sin(2*pi*(w*(t{i}+sum(T))+d(i)));
+%     T(i) = length(t{i})/fs;
 end
 
 % COMPUTE COS/SIN * F_i
@@ -35,7 +35,7 @@ for i = 1:n+1
     sin_wave_shift_times_fi{i} = sin_wave_shift_times_fi{i}.*f{i};
 end
 
-T_cumsum = [0, cumsum(T)]; % T_cumsum(i) = sum_{j=1}^{i-1} T(j)
+% T_cumsum = [0, cumsum(T)]; % T_cumsum(i) = sum_{j=1}^{i-1} T(j)
 
 %  COMPUTE COS/SIN * F_i * t (or t^2)
 cos_wave_shift_times_fi_times_t = cos_wave_shift_times_fi;
@@ -43,11 +43,17 @@ sin_wave_shift_times_fi_times_t = sin_wave_shift_times_fi;
 cos_wave_shift_times_fi_times_t2 = cos_wave_shift_times_fi;
 sin_wave_shift_times_fi_times_t2 = sin_wave_shift_times_fi;
 for i = 1:n+1
-    cos_wave_shift_times_fi_times_t{i} = cos_wave_shift_times_fi_times_t{i}.*(t{i} + T_cumsum(i));
-    sin_wave_shift_times_fi_times_t{i} = sin_wave_shift_times_fi_times_t{i}.*(t{i} + T_cumsum(i));
+%     cos_wave_shift_times_fi_times_t{i} = cos_wave_shift_times_fi_times_t{i}.*(t{i} + T_cumsum(i));
+%     sin_wave_shift_times_fi_times_t{i} = sin_wave_shift_times_fi_times_t{i}.*(t{i} + T_cumsum(i));
+% 
+%     cos_wave_shift_times_fi_times_t2{i} = cos_wave_shift_times_fi_times_t{i}.*(t{i} + T_cumsum(i));
+%     sin_wave_shift_times_fi_times_t2{i} = sin_wave_shift_times_fi_times_t{i}.*(t{i} + T_cumsum(i));
 
-    cos_wave_shift_times_fi_times_t2{i} = cos_wave_shift_times_fi_times_t{i}.*(t{i} + T_cumsum(i));
-    sin_wave_shift_times_fi_times_t2{i} = sin_wave_shift_times_fi_times_t{i}.*(t{i} + T_cumsum(i));
+    cos_wave_shift_times_fi_times_t{i} = cos_wave_shift_times_fi_times_t{i}.*(t{i});
+    sin_wave_shift_times_fi_times_t{i} = sin_wave_shift_times_fi_times_t{i}.*(t{i});
+
+    cos_wave_shift_times_fi_times_t2{i} = cos_wave_shift_times_fi_times_t{i}.*(t{i});
+    sin_wave_shift_times_fi_times_t2{i} = sin_wave_shift_times_fi_times_t{i}.*(t{i});
 end
 
 % COMPUTE INTEGRALS USING TRAPEZOIDAL RULE

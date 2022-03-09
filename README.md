@@ -2,8 +2,9 @@
 
 ## Common Terms
 * "segments" refer to segments of contiguous data on which stimulation is on and the stimulation parameters are **constant** (e.g., constant amplitude, fundamental frequency, shape, etc.).
-* "gaps" refer to what is in between segments, whether that be missing data, data with stimulation off, data where the stimulation parameters do not match those of the stimulation in the segments, etc.
+* "gaps" refer to what is in between segments, whether that be missing data, data with stimulation off, data where the stimulation parameters do not match those of the stimulation in the segments, etc. 
 * "stimulation" and "artifact" are used interchangeably.
+* "phase shift i" refers to the phase shift between the periodic artifact in the 0-th and i-th segment of data and corresponds to the i-th gap in the data.
 
 ## Notation
 *Included in comments in the code; typical notation with associated definitions.*
@@ -14,14 +15,14 @@
 ## User Recommendations
 * For better runtime, use at most ~1e4 total number of samples (across all segments). Preliminary tests showed that while using more than 1e4 samples usually resulted in more accurate frequency/phase shift estimates, the gain in accuracy did not significantly outweigh the loss in computational speed.
 * If your data consists of only one segment, insert an artificial gap of 0 in the middle of the segment. Preliminary tests showed that estimating the frequency and a phase shift jointly is typically less sensitive to the choice of initialization than estimating the frequency alone.
-* Initialize newton_refinement_using_g.m with the frequency and phase shift estimates found using newton_rand_init.m. newton_refinement_using_g.m is very sensitive to initialization, but preliminary tests showed that newton_rand_init.m usually provides a sufficiently good initialization.
+* Initialize newton_refinement_using_g.m with the frequency and phase shift estimates found using newton_rand_init.m. newton_refinement_using_g.m is sensitive to initialization, but preliminary tests showed that newton_rand_init.m usually provides a sufficiently good initialization.
 * If the amplitude of the artifact is much larger than that of the underlying brain signal, we recommend using Algorithm 2. Preliminary tests showed that in this case, a much more accurate estimate of the frequency/phase shifts is required to mitigate "edge effects" resulting from simple harmonic regression; Algorithm 2 was designed to achieve this improved accuracy.
 * Note that segments are input into the functions as **cell arrays**.
 
 ## Brief Description of MATLAB Functions/Scripts
 We group the functions/scripts as follows:
 ### Algorithm 1
-*Estimates the frequency and phase shifts by maximizing the energy using Newton's ascent.*
+*Estimates the frequency and phase shifts by maximizing the energy using Newton's ascent. Corresponds to Algorithm 2 (initialization algorithm) in the paper INSERT PAPER NAME.*
 * newton_rand_init.m: Runs Newton's ascent using uniform random initialization
 * newton_ascent.m: Uses Newton's ascent to maximize the energy with respect to frequency and phase shifts
 * remove_artifact.m: Uses simple harmonic regression to reconstruct and remove the artifact (optional)
@@ -30,7 +31,7 @@ We group the functions/scripts as follows:
 * backtracking_linesearch: Computes the stepsize for Newton's ascent
  
 ### Algorithm 2
-*Refines the frequency and phase shift estimates from Algorithm 1 by solving a least squares problem that minimizes over frequency, phase shifts, and amplitudes through a combination of harmonic regression and Newton's descent.*
+*Refines the frequency and phase shift estimates from Algorithm 1 by solving a least squares problem that minimizes over frequency, phase shifts, and amplitudes by jointly applying harmonic regression and Newton's descent. Corresponds to Algorithm 1 (artifact removal algorithm) in the paper INSERT PAPER NAME.*
 * newton_refinement_using_g.m: Runs Newton's descent to solve the least squares problem and to refine the estimates and reconstruct/remove the artifact
 * remove_artifact_ver_g.m: Computes the objective function in the least squares problem, its gradient, and its Hessian 
 * backtracking_linesearch_for_g.m: Computes the stepsize for Newton's descent (currently unused)

@@ -25,7 +25,7 @@ Patents related to these algorithms have been provisionally filed.
 ## Brief Description of MATLAB Functions/Scripts
 We group the functions/scripts as follows: 
 ### Algorithm 1
-*Refines the frequency and phase shift estimates from Algorithm 1 by solving a least squares problem that minimizes over frequency, phase shifts, and amplitudes by jointly applying harmonic regression and Newton's descent. Corresponds to Algorithm 1 (artifact removal algorithm) in the paper INSERT PAPER NAME.*
+*Estimates the frequency and phase shifts by solving a least squares problem that minimizes over frequency, phase shifts, and amplitudes by jointly applying harmonic regression and Newton's descent. Corresponds to Algorithm 1 (artifact removal algorithm) in the paper INSERT PAPER NAME.*
 * newton_refinement_using_g.m: Runs Newton's descent to solve the least squares problem and to refine the estimates and reconstruct/remove the artifact
 * remove_artifact_ver_g.m: Computes the objective function in the least squares problem, its gradient, and its Hessian 
 * backtracking_linesearch_for_g.m: Computes the stepsize for Newton's descent (currently unused)

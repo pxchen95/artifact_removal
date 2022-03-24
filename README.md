@@ -15,9 +15,10 @@ Patents related to these algorithms have been provisionally filed.
 * N_i = number of samples in i-th segment
 
 ## User Recommendations
-* For better runtime, use at most ~1e4 total number of samples (across all segments). Preliminary tests showed that while using more than 1e4 samples usually resulted in more accurate frequency/phase shift estimates, the gain in accuracy did not significantly outweigh the loss in computational speed.
+* For better runtime, use at most ~1e4 total number of samples (across all segments). Preliminary tests showed that while using more than 1e4 samples usually resulted in more accurate frequency/phase shift estimates, the gain in accuracy did not significantly outweigh the loss in computational speed. 
 * If your data consists of only one segment, insert an artificial gap of 0 in the middle of the segment. Preliminary tests showed that estimating the frequency and a phase shift jointly is typically less sensitive to the choice of initialization than estimating the frequency alone.
 * Initialize newton_refinement_using_g.m with the frequency and phase shift estimates found using newton_rand_init.m. newton_refinement_using_g.m is sensitive to initialization, but preliminary tests showed that newton_rand_init.m usually provides a sufficiently good initialization.
+* Initialize newton_rand_init.m with the device setting of the frequency. Preliminary tests showed that the device setting of the frequency usually provides a sufficiently good initialization.
 * If the amplitude of the artifact is much larger than that of the underlying brain signal, we recommend using Algorithm 2. Preliminary tests showed that in this case, a much more accurate estimate of the frequency/phase shifts is required to mitigate "edge effects" resulting from simple harmonic regression; Algorithm 2 was designed to achieve this improved accuracy.
 * Note that segments are input into the functions as **cell arrays**.
 

@@ -19,7 +19,7 @@ Patents related to these algorithms have been provisionally filed.
 * If your data consists of only one segment, insert an artificial gap of 0 in the middle of the segment. Preliminary tests showed that estimating the frequency and a phase shift jointly is typically less sensitive to the choice of initialization than estimating the frequency alone.
 * Initialize newton_refinement_using_g.m with the frequency and phase shift estimates found using newton_rand_init.m. newton_refinement_using_g.m is sensitive to initialization, but preliminary tests showed that newton_rand_init.m usually provides a sufficiently good initialization.
 * Initialize newton_rand_init.m with the device setting of the frequency. Preliminary tests showed that the device setting of the frequency usually provides a sufficiently good initialization.
-* If the amplitude of the artifact is much larger than that of the underlying brain signal, we recommend using Algorithm 2. Preliminary tests showed that in this case, a much more accurate estimate of the frequency/phase shifts is required to mitigate "edge effects" resulting from simple harmonic regression; Algorithm 2 was designed to achieve this improved accuracy.
+* Preliminary results show that Algorithm 1 (newton_refinement_using_g.m) provides more accurate frequency and phase shift estimates than Algorithm 2 (newton_rand_init.m), but we also include with Algorithm 2 some code implementing simple harmonic regression (remove_artifact.m), which can reconstruct/remove the artifact using the frequency and phase shift estimates from Algorithm 2 (as opposed to those from Algorithm 1). It was observed that in some cases (e.g., when the amplitude of the artifact is much higher than that of the underlying neural signal), the inaccuracies in the Algorithm 2 estimates led to "edge effects" in the reconstructed signal when using simple harmonic regression (i.e., larger errors near the ends of the segments of the reconstructed signal). However, in some cases, using Algorithm 2 + simple harmonic regression can have faster runtimes than (Algorithm 2 +) Algorithm 1.
 * Note that segments are input into the functions as **cell arrays**.
 
 ## Brief Description of MATLAB Functions/Scripts
@@ -31,7 +31,7 @@ We group the functions/scripts as follows:
 * backtracking_linesearch_for_g.m: Computes the stepsize for Newton's descent (currently unused)
 
 ### Algorithm 2 (Initialization Algorithm for Algorithm 1)
-*Estimates the frequency and phase shifts by maximizing the energy using Newton's ascent. Corresponds to Algorithm 2 (initialization algorithm) in the paper INSERT PAPER NAME.*
+*Estimates the frequency and phase shifts by maximizing the energy using Newton's ascent. Corresponds to Algorithm 2 (initialization algorithm) in the paper INSERT PAPER NAME.* Also includes an option to use simple harmonic regression with the frequency and phase shift estimates from Algorithm 2 to reconstruct/remove the artifact.
 * newton_rand_init.m: Runs Newton's ascent using uniform random initialization
 * newton_ascent.m: Uses Newton's ascent to maximize the energy with respect to frequency and phase shifts
 * remove_artifact.m: Uses simple harmonic regression to reconstruct and remove the artifact (optional)

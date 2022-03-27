@@ -3,7 +3,7 @@ close all
 clc
 
 rng(0)   
-example = 2; % PICK WHICH EXAMPLE TO RUN:
+example = 1; % PICK WHICH EXAMPLE TO RUN:
              % 1 = 1 SEGMENT OF DATA
              % 2 = MULTIPLE SHORT SEGMENTS OF DATA
 
@@ -25,17 +25,20 @@ elseif example == 2
     S_cell = convert_vector_to_cellarray(S, N, samp_shift); 
 end
 
-%% RUN ALGORITHM 1
+%% RUN ALGORITHM 2 (INITIALIZATION ALGORITHM)
 K = 10;     % number of harmonics to fit
 w0 = 150.6; % initial guess  
 tic
 [w, d, ~, t] = newton_rand_init(w0, 5, 25, 5000, 1000, S_cell, fs, 1e-8);
-[B_est, A_est, alp, t_vec] = remove_artifact(S_cell, t, fs, K, w, d); % if only using algorithm 2, skip this step
+
+% for comparison, use simple harmonic regression with freq/phase shift
+% estimates from newton_rand_init
+[B_est, A_est, alp, t_vec] = remove_artifact(S_cell, t, fs, K, w, d); 
 toc
 B_est_vec = convert_cellarray_to_vector(B_est, samp_shift, 0); % convert to vectors
 A_est_vec = convert_cellarray_to_vector(A_est, zeros(length(S)-1), nan);
 
-%% RUN ALGORITHM 2 
+%% RUN ALGORITHM 1
 tic
 % initialize with outputs of newton_rand_init
 [w_refine, d_refine, ~, B_est_refine, A_est_refine, alp_refine, t_vec_refine] = ...
@@ -52,33 +55,37 @@ subplot(1,2,1)
 plot(mod(t_vec_true,1/freq_true), S, '.')
 hold on
 plot(mod((0:length(A)-1)/fs,1/freq_true), A, '.')
-plot(mod(t_vec,1/w), A_est_vec, '.')
+plot(mod(t_vec_refine,1/w_refine), A_est_vec_refine, '.')
 title('Algorithm 1')
 legend('observed signal', 'true artifact', 'reconstructed artifact')
-xlabel('time modded by period')
+xlabel('time (s) modulo period')
+ylabel('voltage')
 
 subplot(1,2,2)
 plot(mod(t_vec_true,1/freq_true), S, '.')
 hold on
 plot(mod((0:length(A)-1)/fs,1/freq_true), A, '.')
-plot(mod(t_vec_refine,1/w_refine), A_est_vec_refine, '.')
-title('Algorithm 2')
+plot(mod(t_vec,1/w), A_est_vec, '.')
+title('Algorithm 2 (+ Simple Harmonic Regression)')
 legend('observed signal', 'true artifact', 'reconstructed artifact')
-xlabel('time modded by period')
+xlabel('time (s) modulo period')
+ylabel('voltage')
 
 %% ERROR IN TIME DOMAIN
 figure
 tiledlayout(1,2)
 ax1 = nexttile;
 t_plot = (0:length(B)-1)/fs;
-plot(t_plot, B_est_vec - B)
+plot(t_plot, B_est_vec_refine - B)
 title('Error in Signal Recovered by Algorithm 1')
-xlabel('time')
+xlabel('time (s)')
+ylabel('voltage')
 
 ax2 = nexttile;
-plot(t_plot, B_est_vec_refine - B)
-title('Error in Signal Recovered by Algorithm 2')
-xlabel('time')
+plot(t_plot, B_est_vec - B)
+title('Error in Signal Recovered by Algorithm 2 (+ Simple Harmonic Regression)')
+xlabel('time (s)')
+ylabel('voltage')
 
 linkaxes([ax1, ax2], 'xy')
 
@@ -94,12 +101,12 @@ spectrogram(B, [], [], [], fs, 'yaxis')
 title('true underlying signal')
 
 subplot(1,4,3)
-spectrogram(B_est_vec, [], [], [], fs, 'yaxis')
+spectrogram(B_est_vec_refine, [], [], [], fs, 'yaxis')
 title('algorithm 1')
 
 subplot(1,4,4)
-spectrogram(B_est_vec_refine, [], [], [], fs, 'yaxis')
-title('algorithm 2')
+spectrogram(B_est_vec, [], [], [], fs, 'yaxis')
+title('algorithm 2 + simple harmonic regression')
 
 %% POWER SPECTRUM USING PWELCH
 figure
@@ -113,11 +120,11 @@ pwelch(B,[],[],0:fs/2,fs)
 title('true underlying signal')
 
 ax3 = nexttile;
-pwelch(B_est_vec,[],[],0:fs/2,fs)
+pwelch(B_est_vec_refine,[],[],0:fs/2,fs)
 title('algorithm 1')
 
 ax4 = nexttile;
-pwelch(B_est_vec_refine,[],[],0:fs/2,fs)
-title('algorithm 2')
+pwelch(B_est_vec,[],[],0:fs/2,fs)
+title('algorithm 2 + simple harmonic regression')
 
 linkaxes([ax1 ax2 ax3 ax4], 'xy')

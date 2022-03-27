@@ -46,6 +46,6 @@ We group the functions/scripts as follows:
 * paper_examples/run_paper_examples.m: Runs numerical examples 1-3 in the paper INSERT PAPER NAME
 * paper_examples/example1_SingleSegmentArtifactOnly.mat: 1 segment of data, where artifact is sum of sinusoids with 5 harmonics, no underlying signal
 * paper_examples/example2_SingleSegmentChirp.mat: 1 segment of data, where artifact is sum of sinusoids with 5 harmonics, true underlying signal is a chirp
-* paper_examples/example3_ManySegmentsAliased.mat: 10 segments of data, where artifact is sum of sinusoids with 5 harmonics with fundamental frequency aliased, true underlying signal is a simulated neural signal (computed as the sum of short snippets of sinusoidal waves with random frequencies/random lengths and demeaned) plus iid Gaussian noise
+* paper_examples/example3_ManySegmentsAliased.mat: 10 segments of data, where artifact is sum of sinusoids with 5 harmonics with fundamental frequency aliased due to low sampling rate, true underlying signal is a simulated neural signal (computed as the sum of short snippets of sinusoidal waves with random frequencies/random lengths and demeaned) plus iid Gaussian noise
 * convert_cell_array_to_vector.m: Converts cell array to vector with gaps specified by input *samp_shift*
 * convert_vector_to_cellarray.m: Converts vector to cell array with lengths of segments specified by input *N* and lengths of gaps specified by input *samp_shift*

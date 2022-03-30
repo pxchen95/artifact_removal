@@ -25,13 +25,13 @@ Patents related to these algorithms have been provisionally filed.
 ## Brief Description of MATLAB Functions/Scripts
 We group the functions/scripts as follows: 
 ### Algorithm 1
-*Estimates the frequency and phase shifts by solving a least squares problem that minimizes over frequency, phase shifts, and amplitudes by jointly applying harmonic regression and Newton's descent. Corresponds to Algorithm 1 (artifact removal algorithm) in the paper INSERT PAPER NAME.*
+*Estimates the frequency and phase shifts by solving a least squares problem that minimizes over frequency, phase shifts, and amplitudes by jointly applying harmonic regression and Newton's descent. Corresponds to Algorithm 1 (artifact removal algorithm) in [1].*
 * newton_refinement_using_g.m: Runs Newton's descent to solve the least squares problem and to refine the estimates and reconstruct/remove the artifact
 * remove_artifact_ver_g.m: Computes the objective function in the least squares problem, its gradient, and its Hessian 
 * backtracking_linesearch_for_g.m: Computes the stepsize for Newton's descent (currently unused)
 
 ### Algorithm 2 (Initialization Algorithm for Algorithm 1)
-*Estimates the frequency and phase shifts by maximizing the energy using Newton's ascent. Corresponds to Algorithm 2 (initialization algorithm) in the paper INSERT PAPER NAME.* Also includes an option to use simple harmonic regression with the frequency and phase shift estimates from Algorithm 2 to reconstruct/remove the artifact.
+*Estimates the frequency and phase shifts by maximizing the energy using Newton's ascent. Corresponds to Algorithm 2 (initialization algorithm) in [1].* Also includes an option to use simple harmonic regression with the frequency and phase shift estimates from Algorithm 2 to reconstruct/remove the artifact.
 * newton_rand_init.m: Runs Newton's ascent using uniform random initialization
 * newton_ascent.m: Uses Newton's ascent to maximize the energy with respect to frequency and phase shifts
 * remove_artifact.m: Uses simple harmonic regression to reconstruct and remove the artifact (optional)
@@ -43,9 +43,14 @@ We group the functions/scripts as follows:
 * demo/demo.m: Demonstration of how to use the included functions with examples of different ways to visualize the results
 * demo/1segment_example.mat: 1 long segment of data, where artifact is sum of sinusoids with 5 harmonics, true underlying signal is independent and identically distributed (iid) Gaussian noise
 * demo/multsegment_example.mat: 10 short segments of data, where artifact is sum of sinusoids with 5 harmonics, true underlying signal is iid Gaussian noise
-* paper_examples/run_paper_examples.m: Runs numerical examples 1-3 in the paper INSERT PAPER NAME
+* paper_examples/run_paper_examples.m: Runs numerical examples 1-3 in [1]
 * paper_examples/example1_SingleSegmentArtifactOnly.mat: 1 segment of data, where artifact is sum of sinusoids with 5 harmonics, no underlying signal
 * paper_examples/example2_SingleSegmentChirp.mat: 1 segment of data, where artifact is sum of sinusoids with 5 harmonics, true underlying signal is a chirp
 * paper_examples/example3_ManySegmentsAliased.mat: 10 segments of data, where artifact is sum of sinusoids with 5 harmonics and the fundamental frequency is aliased due to low sampling rate, true underlying signal is a simulated neural signal (computed as the sum of short snippets of sinusoidal waves with random frequencies/random lengths and demeaned) plus iid Gaussian noise
 * convert_cell_array_to_vector.m: Converts cell array to vector with gaps specified by input *samp_shift*
 * convert_vector_to_cellarray.m: Converts vector to cell array with lengths of segments specified by input *N* and lengths of gaps specified by input *samp_shift*
+
+## References
+[1] P. Chen, et al, "Estimation of Periodic Signals with Applications to Deep Brain Stimulation," *preprint*, 2022.
+
+Note: This paper is available on this Github as EstimationPeriodicSignalDBS.pdf.

@@ -2,6 +2,8 @@
 
 Patents related to these algorithms have been provisionally filed.
 
+Link to Github code: https://github.com/pxchen95/artifact_removal
+
 ## Common Terms
 * "segments" refer to segments of contiguous data on which stimulation is on and the stimulation parameters are **constant** (e.g., constant amplitude, fundamental frequency, shape, etc.).
 * "gaps" refer to what is in between segments, whether that be missing data, data with stimulation off, data where the stimulation parameters do not match those of the stimulation in the segments, etc. 

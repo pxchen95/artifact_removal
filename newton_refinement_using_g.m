@@ -17,7 +17,6 @@ function [w, d, num_iter, B, A, alp, t_vec] = ...
 %     fs:         scalar, sampling rate
 %     K:          scalar, # of harmonics to fit
 %     tol:        scalar, tolerance for stopping criteria
-%     t_vec:      1 x totalNumSamples vector, times shifted by found time shifts
 %
 % OUTPUTS: 
 %     w:        scalar, frequency
@@ -29,6 +28,7 @@ function [w, d, num_iter, B, A, alp, t_vec] = ...
 %          alp(1)   = amp_0
 %          alp(i)   = amplitude of cos(2*pi*K*i*t), i = 2, ..., K+1
 %          alp(K+i) = amplitude of sin(2*pi*K*i*t), i = 2, ..., K+1
+%     t_vec:    1 x totalNumSamples vector, times shifted by found time shifts
  
 if ~iscell(S)
     disp('ERROR: Input S must be a cell array')
